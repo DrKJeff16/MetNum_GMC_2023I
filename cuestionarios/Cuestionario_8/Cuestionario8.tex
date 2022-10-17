@@ -1,0 +1,222 @@
+\documentclass[12pt,letterpaper]{article}
+
+\usepackage[paper=letterpaper]{geometry}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{mathptmx}
+\usepackage{ragged2e}
+\usepackage{pdfpages}
+\usepackage{multicol}
+\usepackage{authblk}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{physics}
+\usepackage{latexsym}
+\usepackage{fancyhdr}
+\usepackage{setspace}
+\usepackage{blindtext}
+
+\usepackage{siunitx}
+\sisetup{
+	color,
+	number-color,
+	number-mode=math,
+	unit-color,
+	unit-mode=math,
+	round-mode=places,
+	round-precision=5
+}
+
+\usepackage{extsizes}
+\edef\restoreparindent{\parindent=\the\parindent\relax}
+\usepackage{parskip}
+\setlength{\parskip}{0.75em}
+\restoreparindent
+\pagestyle{fancy}
+
+\usepackage{titlesec}
+\usepackage{array}
+\usepackage{float}
+\usepackage{varwidth}
+\usepackage[toc,page]{appendix}
+\usepackage{kantlipsum}
+
+%\usepackage[labelfont=bf,font={small,it}]{caption}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{booktabs}
+\usepackage{multirow}
+
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{changepage}
+\usepackage{lmodern}
+
+\usepackage{listings}
+\usepackage{color}
+\renewcommand\lstlistingname{Quelltext}
+
+\lstset{
+	language=Python,
+	basicstyle=\small\sffamily,
+	numbers=left,
+	numberstyle=\small,
+	frame=tb,
+	tabsize=4,
+	columns=fixed,
+	showstringspaces=true,
+	showtabs=true,
+	keepspaces,
+	commentstyle=\color{Gray},
+	keywordstyle=\color{Green}
+}
+
+\usepackage{pdftexcmds}
+\usepackage{hyperref}
+\usepackage{enumitem}
+
+\hypersetup{
+	pdftitle={Método De Interpolación De Chebyshev},
+	pdfborder=0 0 0,
+	destlabel=true,
+	colorlinks=true,
+	urlcolor=magenta,
+	linktoc=section,
+	citecolor=blue,
+	linkcolor=black,
+	filecolor=red,
+	pdfpagemode=FullScreen
+}
+
+\usepackage{eufrak}
+
+%\usepackage{fontspec}
+\usepackage{hyphenat}
+\usepackage{longtable}
+\usepackage{titletoc}
+\usepackage{tocloft}
+\usepackage{tocbibind}
+\usepackage{afterpage}
+%\usepackage[tocgraduated]{tocstyle}
+%\usetocstyle{allwithdot}
+
+\usepackage{comment}
+\usepackage{csquotes}
+\usepackage[spanish,mexico,english,british]{babel}
+\usepackage[backend=biber]{biblatex}
+
+\addbibresource{Cuestionario8.bib}
+\bibliography{Cuestionario8}
+
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+\usepgfplotslibrary{units}
+
+\DeclareCaptionType{equ}[][]
+%\captionsetup[equ]{labelformat=none}
+
+\captionsetup{
+	format=hang,
+	labelformat=brace,
+	labelsep=newline,
+	justification=centering,
+	width=0.82\textwidth,
+	font={
+		small,
+		it,
+		md,
+		tt,
+		onehalfspacing
+	}
+}
+
+\author{Guennadi Maximov Cortés}
+\date{\today}
+\title{Interpolación de Chebyshev}
+
+\renewcommand*\contentsname{{Índice}}
+
+\begin{document}
+	\pagenumbering{arabic}
+	\maketitle
+	\tableofcontents
+	\newpage
+
+	\chapter{Introducción} %\label{C1}
+		\section{Recurrencia Del Coseno} %\label{C1S1}
+
+		Por las propiedades periódicas de las funciones trigonométricas:
+
+			\begin{figure}
+				\begin{center}
+					\begin{equation}
+						\begin{split}
+							\cos\left(2\theta\right) &= \cos^{2}\theta - \sin^2 \theta\\
+							&= 2\cos^{2} \theta - 1
+						\end{split}
+					\end{equation}
+				\end{center}
+				\label{eq1:cos1}
+				\caption{Fórmula resultante cuando ${n=2}$.}
+			\end{figure}
+
+			\begin{figure}
+				\begin{center}
+					\begin{equation}
+						\begin{split}
+						\cos \left(3\theta\right) &= 4\cos^3 \theta - 3\cos \theta
+						\end{split}
+					\end{equation}
+				\end{center}
+				\label{eq2:cos1}
+				\caption{Fórmula resultante cuando ${n=3}$.}
+			\end{figure}
+
+			En las ecuaciones \ref{eq1:cos1} y \ref{eq2:cos1}, podemos referenciarnos
+			a las identidades trigonométricas de los múltiplos de un ángulo ${\theta}$ \cite{TRIGID:1}.
+
+			\begin{figure}
+				\begin{center}
+					\begin{equation}
+						\begin{split}
+							\cos \left(n\theta\right) &= \sum_{\text{k par}} \left(-1\right)^{\frac{k}{2}}
+							\begin{pmatrix}
+								n\\
+								k
+							\end{pmatrix} \cos^{n-k}\theta\sin^{k}\theta\\
+							&= \sum_{i=0}^{\left(n + 1\right) \slash 2} \sum_{j=0}^{i} \left(-1\right)^{i-j}
+							\begin{pmatrix}
+								n\\
+								2i + 1
+							\end{pmatrix}
+							\begin{pmatrix}
+								i\\
+								j
+							\end{pmatrix} \cos^{n-2\left(i-j\right)-1}\theta
+						\end{split}
+					\end{equation}
+				\end{center}
+				\label{gen1:cos1}
+				\caption{Forma Discreta de ${\cos\left(n \theta\right)}$}
+			\end{figure}
+
+			Si extendemos esto a ${n\in\mathbb{N}}$ para ${\cos\left(x\right)}$,
+			tenemos la generalización de la figura \ref{gen1:cos1}\cite{TRIGID:1}.
+
+		\section{Polinomios De Chebyshev} %\label{C1S2}
+
+	%\addtocontents{toc}{\setcounter{tocdepth}{4}}
+	\chapter{Interpolación Polinomial} \label{C2}
+		\section{Interpolación de Chebyshev} \label{C2S1}
+
+	\medskip
+
+	\printbibliography[title={Referencias}]
+	\printbibliography[keyword={YT},heading=subbibintoc,title={Videos de YouTube}]
+	\printbibliography[keyword={Web},heading=subbibintoc,title={Páginas Web Y Artículos}]
+
+\end{document}
