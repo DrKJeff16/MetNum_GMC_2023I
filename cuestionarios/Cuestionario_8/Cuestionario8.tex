@@ -1,9 +1,10 @@
-\documentclass[12pt,letterpaper]{article}
+\documentclass[14pt,letterpaper]{report}
 
 \usepackage[paper=letterpaper]{geometry}
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
+
 \usepackage{mathptmx}
 \usepackage{ragged2e}
 \usepackage{pdfpages}
@@ -27,7 +28,7 @@
 	unit-color,
 	unit-mode=math,
 	round-mode=places,
-	round-precision=5
+	round-precision=8
 }
 
 \usepackage{extsizes}
@@ -92,7 +93,6 @@
 }
 
 \usepackage{eufrak}
-
 %\usepackage{fontspec}
 \usepackage{hyphenat}
 \usepackage{longtable}
@@ -106,6 +106,7 @@
 \usepackage{comment}
 \usepackage{csquotes}
 \usepackage[spanish,mexico,english,british]{babel}
+\usepackage[TeX,UKenglish]{isodate}
 \usepackage[backend=biber]{biblatex}
 
 \addbibresource{Cuestionario8.bib}
@@ -123,15 +124,9 @@
 	format=hang,
 	labelformat=brace,
 	labelsep=newline,
-	justification=centering,
-	width=0.82\textwidth,
-	font={
-		small,
-		it,
-		md,
-		tt,
-		onehalfspacing
-	}
+	justification=justified,
+	width=0.8\textwidth,
+	font={small,it,md,tt,onehalfspacing}
 }
 
 \author{Guennadi Maximov Cortés}
@@ -147,71 +142,57 @@
 	\newpage
 
 	\chapter{Introducción} %\label{C1}
+		\newpage
 		\section{Recurrencia Del Coseno} %\label{C1S1}
+			Por las propiedades periódicas de las funciones trigonométricas:
 
-		Por las propiedades periódicas de las funciones trigonométricas:
-
-			\begin{figure}
-				\begin{center}
-					\begin{equation}
-						\begin{split}
-							\cos\left(2\theta\right) &= \cos^{2}\theta - \sin^2 \theta\\
-							&= 2\cos^{2} \theta - 1
-						\end{split}
-					\end{equation}
-				\end{center}
+			\begin{align}
 				\label{eq1:cos1}
-				\caption{Fórmula resultante cuando ${n=2}$.}
-			\end{figure}
+				\cos\left(2\theta\right) &= \cos^{2}\theta - \sin^{2} \theta\\
+				&= 2\cos^{2} \theta - 1\nonumber\\
+			%\caption{Fórmula resultante cuando ${n=2}$.}
+				\label{eq1:cos2}
+				\cos\left(3\theta\right) &= 4\cos^{3}\theta-3\cos\theta
+			\end{align}
+			%\caption{Fórmula resultante cuando ${n=3}$.}
 
-			\begin{figure}
-				\begin{center}
-					\begin{equation}
-						\begin{split}
-						\cos \left(3\theta\right) &= 4\cos^3 \theta - 3\cos \theta
-						\end{split}
-					\end{equation}
-				\end{center}
-				\label{eq2:cos1}
-				\caption{Fórmula resultante cuando ${n=3}$.}
-			\end{figure}
+			En las ecuaciones \ref{eq1:cos1} y \ref{eq1:cos2}, podemos referenciarnos
+			a las identidades trigonométricas de los múltiplos de un ángulo ${\theta}$
+			\cite{TRIGID:1}.
 
-			En las ecuaciones \ref{eq1:cos1} y \ref{eq2:cos1}, podemos referenciarnos
-			a las identidades trigonométricas de los múltiplos de un ángulo ${\theta}$ \cite{TRIGID:1}.
-
-			\begin{figure}
-				\begin{center}
-					\begin{equation}
-						\begin{split}
-							\cos \left(n\theta\right) &= \sum_{\text{k par}} \left(-1\right)^{\frac{k}{2}}
-							\begin{pmatrix}
-								n\\
-								k
-							\end{pmatrix} \cos^{n-k}\theta\sin^{k}\theta\\
-							&= \sum_{i=0}^{\left(n + 1\right) \slash 2} \sum_{j=0}^{i} \left(-1\right)^{i-j}
-							\begin{pmatrix}
-								n\\
-								2i + 1
-							\end{pmatrix}
-							\begin{pmatrix}
-								i\\
-								j
-							\end{pmatrix} \cos^{n-2\left(i-j\right)-1}\theta
-						\end{split}
-					\end{equation}
-				\end{center}
-				\label{gen1:cos1}
-				\caption{Forma Discreta de ${\cos\left(n \theta\right)}$}
-			\end{figure}
+			\begin{equation}
+				\begin{aligned}
+					\label{eq2:cos1}
+					\cos\left(n\theta\right) &= \sum_{k\ par} \left(-1\right)^{\frac{k}{2}}
+					\begin{pmatrix}
+						n\\
+						k
+					\end{pmatrix}
+					\cos^{n-k}\theta\sin^{k}\theta\\
+					&= \sum_{i=0}^{\left(n+1\right) \slash 2} \sum_{j=0}^{i} \left(-1\right)^{i-j}
+					\begin{pmatrix}
+						n\\
+						2i + 1
+					\end{pmatrix}
+					\begin{pmatrix}
+						i\\
+						j
+					\end{pmatrix}
+					\cos^{n-2\left(i-j\right)-1}\theta
+				\end{aligned}
+			\end{equation}
+			%\caption{Forma Discreta de ${\cos\left(n\theta\right)}$}
 
 			Si extendemos esto a ${n\in\mathbb{N}}$ para ${\cos\left(x\right)}$,
-			tenemos la generalización de la figura \ref{gen1:cos1}\cite{TRIGID:1}.
+			tenemos la generalización de la figura \ref{eq2:cos1}
+			\cite{TRIGID:1}.
 
 		\section{Polinomios De Chebyshev} %\label{C1S2}
+			\blindtext
 
 	%\addtocontents{toc}{\setcounter{tocdepth}{4}}
-	\chapter{Interpolación Polinomial} \label{C2}
-		\section{Interpolación de Chebyshev} \label{C2S1}
+	\chapter{Interpolación Polinomial} %\label{C2}
+		\section{Interpolación de Chebyshev} %\label{C2S1}
 
 	\medskip
 
