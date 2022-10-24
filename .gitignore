@@ -276,3 +276,4 @@ TSWLatexianTemp*
 *.lpz
 
 local_sources
+*.draft.pdf
